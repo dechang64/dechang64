@@ -4,7 +4,7 @@
 
 **AI Professor @ XJTLU** | Rust Enthusiast | Federated Learning Researcher
 
-Building open-source tools at the intersection of **AI**, **finance**, and **medical imaging**.
+Building open-source tools at the intersection of **AI**, **robotics**, **finance**, and **medical imaging**.
 
 [![Rust](https://img.shields.io/badge/Rust-1.70+-orange?logo=rust)](https://www.rust-lang.org/)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)](https://python.org/)
@@ -18,17 +18,18 @@ Building open-source tools at the intersection of **AI**, **finance**, and **med
 
 | Project | Description | Tech | Stars |
 |---------|-------------|------|-------|
-| [**organoid-fl**](https://github.com/dechang64/organoid-fl) | Federated learning platform for organoid image analysis | Rust, PyTorch, gRPC, HNSW | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/organoid-fl?style=social) |
-| [**FundFL**](https://github.com/dechang64/fundfl) | Open-source private fund analysis & asset pricing platform | Rust, HNSW, SQLite, gRPC | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/fundfl?style=social) |
+| [**organoid-fl**](https://github.com/dechang64/organoid-fl) | Federated learning for organoid image analysis (99.17% accuracy) | Rust, PyTorch, gRPC, HNSW | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/organoid-fl?style=social) |
+| [**embodied-fl**](https://github.com/dechang64/embodied-fl) | Federated learning for embodied intelligence / robotics | Rust, HNSW, gRPC, NumPy | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/embodied-fl?style=social) |
 | [**defect-fl**](https://github.com/dechang64/defect-fl) | PCB defect detection with federated learning | Rust, PyTorch, gRPC | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/defect-fl?style=social) |
-| [**AI-for-TT-OPC**](https://github.com/dechang64/AI-for-TT-OPC) | OPC (One-Person Company) toolkit & AI agent framework | TypeScript, OpenClaw | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/AI-for-TT-OPC?style=social) |
+| [**FundFL**](https://github.com/dechang64/fundfl) | Open-source private fund analysis & asset pricing platform | Rust, HNSW, SQLite, gRPC | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/fundfl?style=social) |
+| [**AI-for-TT-OPC**](https://github.com/dechang64/AI-for-TT-OPC) | OPC toolkit & AI agent framework | TypeScript, OpenClaw | ![GitHub Repo stars](https://img.shields.io/github/stars/dechang64/AI-for-TT-OPC?style=social) |
 
 ### 🧰 Tech Stack
 
 ```
 Rust:    tonic · prost · axum · rusqlite · hnsw · sha2 · tokio
 Python:  PyTorch · ResNet18 · FedAvg · numpy · gRPC
-ML:      Federated Learning · HNSW Vector Search · Transfer Learning
+ML:      Federated Learning · HNSW Vector Search · Embodied AI · Transfer Learning
 Infra:   gRPC · Protocol Buffers · SQLite · Docker
 ```
 
@@ -39,7 +40,7 @@ Infra:   gRPC · Protocol Buffers · SQLite · Docker
 
 ### 📫 Contact
 
-- 📧 dechang64 [at] outlook.com
+- 📧 dechang64 [at] gmail.com
 - 🔬 XJTLU, AI Academy
 - 📝 [CSDN Blog](https://blog.csdn.net/dechang64)
 
@@ -47,6 +48,6 @@ Infra:   gRPC · Protocol Buffers · SQLite · Docker
 
 <div align="center">
 
-*"One person, one company. AI makes it possible."*
+*"Train robots together, keep data apart."*
 
 </div>

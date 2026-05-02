@@ -90,7 +90,7 @@ AI / ML     PyTorch · ViT · MAE · YOLOv11 · DINOv2 · FedAvg
 
 ### 📫 联系方式
 
-- 📧 dechang64 [at] gmail.com
+- 📧 dechang.xu [at] gmail.com
 - 🔬 西交利物浦大学 (XJTLU)，Academy of AI
 - 📝 笔名：[杨家小蠹](https://www.qidian.com/author/4362393/)（阅文集团）
 - 🌐 技术博客：CSDN @dechang64

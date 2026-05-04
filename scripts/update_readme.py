@@ -10,8 +10,26 @@ GITHUB_USER = "dechang64"
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "repos-config.json")
 README_PATH = os.path.join(os.path.dirname(__file__), "..", "README.md")
 
-START_MARKER = "<!-- AUTO-GENERATED-START -->"
-END_MARKER = "<!-- AUTO-GENERATED-END -->"
+REPO_START = "<!-- AUTO-GENERATED-START -->"
+REPO_END = "<!-- AUTO-GENERATED-END -->"
+STATS_START = "<!-- STATS-AUTO-START -->"
+STATS_END = "<!-- STATS-AUTO-END -->"
+
+STATS_PRIMARY_URL = (
+    "https://github-readme-stats.vercel.app/api"
+    f"?username={GITHUB_USER}&show_icons=true&theme=tokyonight&hide_border=true&count_private=true"
+)
+STATS_LANGS_URL = (
+    "https://github-readme-stats.vercel.app/api/top-langs/"
+    f"?username={GITHUB_USER}&layout=compact&theme=tokyonight&hide_border=true&langs_count=8"
+)
+STATS_STREAK_URL = (
+    f"https://streak-stats.demolab.com?user={GITHUB_USER}&theme=tokyonight&hide_border=true"
+)
+STATS_SKILLS_ICONS = (
+    "https://skillicons.dev/icons?i=rust,python,pytorch,docker,git,linux,"
+    "grpc,react,streamlit,sqlite&theme=dark"
+)
 
 
 def fetch_repos():
@@ -34,6 +52,30 @@ def star_badge(count):
     if count == 0:
         return ""
     return f" ⭐{count}"
+
+
+def check_url(url, timeout=5):
+    """Return True if URL returns HTTP 200."""
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "stats-check"})
+        resp = urllib.request.urlopen(req, timeout=timeout)
+        return resp.status == 200
+    except Exception:
+        return False
+
+
+def generate_stats():
+    """Detect which stats service is available and generate markdown."""
+    if check_url(STATS_PRIMARY_URL):
+        return (
+            f'<img src="{STATS_PRIMARY_URL}" width="48%"/>\n'
+            f'<img src="{STATS_LANGS_URL}" width="48%"/>'
+        )
+    # Fallback: streak + skill icons
+    return (
+        f'<img src="{STATS_STREAK_URL}" width="48%"/>\n'
+        f'<img src="{STATS_SKILLS_ICONS}" width="48%"/>'
+    )
 
 
 def generate_section(title, repo_names, repo_map, config):
@@ -59,18 +101,17 @@ def generate_section(title, repo_names, repo_map, config):
         return ""
 
     header = "| 项目 | 简介 |"
-    separator = "|------|------|"
-    # Check if any row has lang or stars
+    sep = "|------|------|"
     has_lang = any(repo_map.get(n, {}).get("language") for n in repo_names if n in repo_map)
     has_stars = any(repo_map.get(n, {}).get("stargazers_count", 0) > 0 for n in repo_names if n in repo_map)
     if has_lang:
         header += " 语言 |"
-        separator += "------|"
+        sep += "------|"
     if has_stars:
         header += " ⭐ |"
-        separator += "----|"
+        sep += "----|"
 
-    return f"### {title}\n\n{header}\n{separator}\n" + "\n".join(rows)
+    return f"### {title}\n\n{header}\n{sep}\n" + "\n".join(rows)
 
 
 def generate_uncategorized(repos, config):
@@ -79,14 +120,13 @@ def generate_uncategorized(repos, config):
     for names in config["categories"].values():
         categorized.update(names)
     categorized.update(config.get("exclude", []))
-
-    uncategorized = [r for r in repos if r["name"] not in categorized]
-    if not uncategorized:
+    uncat = [r for r in repos if r["name"] not in categorized]
+    if not uncat:
         return ""
 
     desc_overrides = config.get("descriptions", {})
     rows = []
-    for r in uncategorized:
+    for r in uncat:
         desc = desc_overrides.get(r["name"]) or r.get("description") or ""
         lang = r.get("language") or ""
         badge = star_badge(r.get("stargazers_count", 0))
@@ -99,17 +139,28 @@ def generate_uncategorized(repos, config):
         rows.append("| " + " | ".join(cols) + " |")
 
     header = "| 项目 | 简介 |"
-    separator = "|------|------|"
-    has_lang = any(r.get("language") for r in uncategorized)
-    has_stars = any(r.get("stargazers_count", 0) > 0 for r in uncategorized)
+    sep = "|------|------|"
+    has_lang = any(r.get("language") for r in uncat)
+    has_stars = any(r.get("stargazers_count", 0) > 0 for r in uncat)
     if has_lang:
         header += " 语言 |"
-        separator += "------|"
+        sep += "------|"
     if has_stars:
         header += " ⭐ |"
-        separator += "----|"
+        sep += "----|"
 
-    return f"### 📦 其他项目\n\n{header}\n{separator}\n" + "\n".join(rows)
+    return f"### 📦 其他项目\n\n{header}\n{sep}\n" + "\n".join(rows)
+
+
+def replace_section(text, start, end, content):
+    """Replace content between markers."""
+    pattern = re.escape(start) + r".*?" + re.escape(end)
+    replacement = start + "\n" + content + "\n" + end
+    new_text, count = re.subn(pattern, replacement, text, flags=re.DOTALL)
+    if count == 0:
+        print(f"WARNING: Markers {start}...{end} not found")
+        return text, False
+    return new_text, True
 
 
 def main():
@@ -117,6 +168,7 @@ def main():
     repo_map = {r["name"]: r for r in repos}
     config = load_config()
 
+    # Generate repo sections
     sections = []
     for cat_name, repo_names in config["categories"].items():
         section = generate_section(cat_name, repo_names, repo_map, config)
@@ -127,24 +179,26 @@ def main():
     if uncategorized:
         sections.append(uncategorized)
 
-    generated = "\n\n---\n\n".join(sections)
+    repo_content = "\n\n---\n\n".join(sections)
 
-    # Read existing README and replace between markers
+    # Generate stats
+    stats_content = generate_stats()
+
+    # Read and update README
     with open(README_PATH, "r") as f:
         readme = f.read()
 
-    pattern = re.escape(START_MARKER) + r".*?" + re.escape(END_MARKER)
-    replacement = START_MARKER + "\n\n" + generated + "\n\n" + END_MARKER
+    readme, ok1 = replace_section(readme, REPO_START, REPO_END, repo_content)
+    readme, ok2 = replace_section(readme, STATS_START, STATS_END, stats_content)
 
-    new_readme, count = re.subn(pattern, replacement, readme, flags=re.DOTALL)
-    if count == 0:
-        print("ERROR: Markers not found in README.md")
+    if not ok1 or not ok2:
+        print("ERROR: Some markers not found in README.md")
         return
 
     with open(README_PATH, "w") as f:
-        f.write(new_readme)
+        f.write(readme)
 
-    print(f"README updated — {len(repos)} repos, {len(sections)} categories")
+    print(f"README updated — {len(repos)} repos, {len(sections)} categories, stats generated")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,34 @@
+{
+  "categories": {
+    "🏛️ 核心项目": ["federated-ai-platform", "FundFL", "monetary-policy-lab"],
+    "🔬 联邦学习系列": ["organoid-fl", "embodied-fl", "medical-fl", "PCB-Defect-FL", "reading-fl", "ewa-fed", "twc-fl-prod"],
+    "🧠 AI & 前沿交叉": ["NeuroSync", "embroidery-agent", "mural-restoration", "pai", "dgy-treehole", "suzhou-tt-research", "AIBT2026"],
+    "🔧 工具 & 基础设施": ["AI-for-TT-OPC", "tt_opc_platform", "hw_opc_platform"],
+    "📊 金融 & 研究": ["mutual-fund-risk-adjusted-performance", "MPM_Revisit_Research_Analysis"]
+  },
+  "exclude": ["dechang64", "dechang64.github.io"],
+  "descriptions": {
+    "federated-ai-platform": "联邦智能计算平台 · 自研 HNSW · FedAvg · RAG · CoT · Agent · 五层幻觉防御",
+    "FundFL": "联邦智能基金分析平台 · Rust HNSW · gRPC · DP · CROWN 幻觉防御",
+    "monetary-policy-lab": "货币政策研究实验室 · 事件研究 · 双冲击分解 · FOMC 情绪轨迹",
+    "organoid-fl": "类器官图像联邦学习 · AUROC 99.17% · 区块链审计 · Rust HNSW",
+    "embodied-fl": "具身智能联邦学习 · YOLO 联邦训练 · NDA 数据保护",
+    "medical-fl": "医学影像联邦学习 · ViT + MAE · FedAvg · 原型对比学习",
+    "PCB-Defect-FL": "PCB 缺陷检测联邦学习 · YOLOv11 · DINOv2 · 联邦分类",
+    "reading-fl": "校园读书会联邦学习 · 原型银行 · 情感联邦学习 · HNSW",
+    "NeuroSync": "fMRI 预测建模 · SHAP 可解释 AI · CROWN Conformity 防御 · SCL 对比学习",
+    "embroidery-agent": "刺绣智能体 · 针迹生成 · 风格指纹 · FL 跨绣坊协作",
+    "mural-restoration": "敦煌壁画修复 FL · YOLO + DINOv2 · 非遗保护",
+    "pai": "慈善资产智能 · Federated RAG · Gates Foundation 2026 资助 · GPT 提升 45.9% 捐赠率",
+    "AI-for-TT-OPC": "技术转移 OPC 实操指南 · AI Agent 赋能科研转化",
+    "tt_opc_platform": "技术转移 OPC 平台 · 软件认证管理",
+    "hw_opc_platform": "硬件 OPC 平台 · 硬件认证管理",
+    "mutual-fund-risk-adjusted-performance": "基金风险调整绩效分析 · 60 个月实证研究",
+    "MPM_Revisit_Research_Analysis": "多项目管理（MPM）再探研究分析",
+    "ewa-fed": "教育权重自适应联邦学习",
+    "twc-fl-prod": "三江学院联邦学习生产平台",
+    "dgy-treehole": "大树洞匿名倾诉平台",
+    "suzhou-tt-research": "苏州技术转移研究",
+    "AIBT2026": "Forum on AI & BioTech 2026 会议网站"
+  }
+}
